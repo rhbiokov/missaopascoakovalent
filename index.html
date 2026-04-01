@@ -16,7 +16,7 @@
   .instructions strong { color: #1B3A6B; }
   .game-area { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
   @media (max-width: 540px) {
-    .game-area { grid-template-columns: 1fr; }
+    .game-area { grid-template-columns: 1fr; display: flex; flex-direction: column-reverse; }
     .cell { font-size: 13px; }
     #kora-img { height: 160px !important; }
   }
