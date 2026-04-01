@@ -7,41 +7,41 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: Arial, sans-serif; background: #EEF4FB; min-height: 100vh; display: flex; align-items: flex-start; justify-content: center; padding: 24px 12px; }
-  .container { max-width: 680px; width: 100%; }
+  .container { max-width: 720px; width: 100%; }
   .header { text-align: center; margin-bottom: 1.5rem; }
   .header h1 { font-size: 20px; font-weight: 600; color: #1B3A6B; margin-bottom: 4px; }
   .header p { font-size: 13px; color: #3A7BBF; }
   .instructions { background: #D6E8F7; border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 1.25rem; border: 1px solid #A8CDE8; }
   .instructions p { font-size: 13px; color: #1B3A6B; line-height: 1.6; }
   .instructions strong { color: #1B3A6B; }
-  .game-area { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-  @media (max-width: 540px) {
-    .game-area { grid-template-columns: 1fr; display: flex; flex-direction: column-reverse; }
-    .cell { font-size: 13px; }
-    #kora-img { height: 160px !important; }
-  }
-  .grid-label { font-size: 11px; color: #888; margin-bottom: 8px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
-  #word-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 2px; user-select: none; border: 1px solid #ddd; border-radius: 8px; padding: 8px; background: #fff; }
-  .cell { width: 100%; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 500; color: #1a1a1a; border-radius: 3px; cursor: pointer; transition: background 0.1s; text-transform: uppercase; border: 1px solid transparent; }
-  .cell:hover { background: #f0f0f0; }
+  .game-area { display: grid; grid-template-columns: 1fr 260px; gap: 1rem; }
+  #word-grid { display: grid; grid-template-columns: repeat(15, 1fr); gap: 2px; user-select: none; border: 1px solid #A8CDE8; border-radius: 8px; padding: 8px; background: #fff; }
+  .cell { width: 100%; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; color: #1a1a1a; border-radius: 3px; cursor: pointer; transition: background 0.1s; text-transform: uppercase; border: 1px solid transparent; }
+  .cell:hover { background: #D6E8F7; }
   .cell.selected { background: #A8CDE8; color: #1B3A6B; border-color: #3A7BBF; }
   .cell.found-0 { background: #1B3A6B; color: #EEF4FB; border-color: #1B3A6B; }
   .cell.found-1 { background: #3A7BBF; color: #EEF4FB; border-color: #2A6BAF; }
   .cell.found-2 { background: #5BA3D9; color: #EEF4FB; border-color: #3A7BBF; }
   .cell.found-3 { background: #7EBCE6; color: #1B3A6B; border-color: #5BA3D9; }
   .cell.found-4 { background: #A8CDE8; color: #1B3A6B; border-color: #7EBCE6; }
-  .cell.egg-glow { background: transparent; border-color: transparent; color: #1a1a1a; }
+  .cell.found-5 { background: #1B3A6B; color: #EEF4FB; border-color: #1B3A6B; opacity: 0.85; }
+  .cell.found-6 { background: #3A7BBF; color: #EEF4FB; border-color: #2A6BAF; opacity: 0.85; }
+  .cell.found-7 { background: #5BA3D9; color: #EEF4FB; border-color: #3A7BBF; opacity: 0.85; }
   .cell.egg-found { background: #3A7BBF !important; color: #EEF4FB !important; border-color: #1B3A6B !important; animation: pulse 0.4s ease; }
   @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.3)} }
-  .words-panel { display: flex; flex-direction: column; gap: 8px; }
-  .word-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #3A7BBF; padding: 6px 10px; border-radius: 8px; border: 1px solid #A8CDE8; background: #fff; transition: all 0.2s; }
-  .word-item.found { color: #1B3A6B; font-weight: 500; }
+  .words-panel { display: flex; flex-direction: column; gap: 6px; }
+  .grid-label { font-size: 11px; color: #3A7BBF; margin-bottom: 8px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+  .word-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #3A7BBF; padding: 6px 10px; border-radius: 8px; border: 1px solid #A8CDE8; background: #fff; transition: all 0.2s; }
+  .word-item.found { color: #1B3A6B; font-weight: 600; }
   .word-item .dot { width: 8px; height: 8px; border-radius: 50%; background: #A8CDE8; flex-shrink: 0; transition: background 0.3s; }
   .word-item.found-0 .dot { background: #1B3A6B; }
   .word-item.found-1 .dot { background: #3A7BBF; }
   .word-item.found-2 .dot { background: #5BA3D9; }
   .word-item.found-3 .dot { background: #7EBCE6; }
   .word-item.found-4 .dot { background: #A8CDE8; }
+  .word-item.found-5 .dot { background: #1B3A6B; }
+  .word-item.found-6 .dot { background: #3A7BBF; }
+  .word-item.found-7 .dot { background: #5BA3D9; }
   .word-item.found .word-text { text-decoration: line-through; opacity: 0.6; }
   .egg-hint { font-size: 12px; color: #3A7BBF; margin-top: 8px; padding: 8px 10px; border-radius: 8px; border: 1px dashed #3A7BBF; line-height: 1.5; }
   .progress-bar { height: 4px; background: #A8CDE8; border-radius: 2px; margin-top: 1rem; overflow: hidden; }
@@ -54,6 +54,11 @@
   .cta-answer { font-size: 13px; font-weight: 600; color: #1B3A6B; background: #A8CDE8; padding: 6px 14px; border-radius: 8px; display: inline-block; margin-bottom: 10px; letter-spacing: 0.08em; }
   .cta-btn { display: inline-block; font-size: 13px; font-weight: 600; padding: 10px 24px; border-radius: 8px; background: #1B3A6B; color: #fff; border: none; cursor: pointer; text-decoration: none; transition: opacity 0.15s; }
   .cta-btn:hover { opacity: 0.85; }
+  @media (max-width: 560px) {
+    .game-area { grid-template-columns: 1fr; display: flex; flex-direction: column-reverse; }
+    .cell { font-size: 10px; }
+    #kora-img { height: 160px !important; }
+  }
 </style>
 </head>
 <body>
@@ -61,10 +66,10 @@
   <div class="header">
     <img src="https://raw.githubusercontent.com/rhbiokov/missaopascoakovalent/main/kora.png" id="kora-img" style="height:220px; object-fit:contain; margin-bottom:8px; display:block; margin-left:auto; margin-right:auto;" alt="Kora"/>
     <h1>🚀 Missão Páscoa — Kora Espacial</h1>
-    <p>Encontre as 5 palavras escondidas e o ovo misterioso para participar do sorteio!</p>
+    <p>Encontre as 8 palavras escondidas e o ovo misterioso para participar do sorteio!</p>
   </div>
   <div class="instructions">
-    <p><strong>Como jogar:</strong> clique em uma letra e arraste para selecionar as palavras ocultas. Elas podem estar na horizontal ou vertical. Encontre todas e descubra o ovo escondido na grade para revelar a senha de inscrição.</p>
+    <p><strong>Como jogar:</strong> clique e arraste para selecionar as palavras ocultas. Elas podem estar na horizontal, vertical ou diagonal. Encontre todas e descubra o ovo escondido para revelar a senha de inscrição!</p>
   </div>
   <div class="game-area">
     <div>
@@ -76,10 +81,13 @@
     <div class="words-panel">
       <div class="grid-label">Palavras para encontrar</div>
       <div class="word-item" id="wi-0"><span class="dot"></span><span class="word-text">KOVALENT</span></div>
-      <div class="word-item" id="wi-1"><span class="dot"></span><span class="word-text">ORBITA</span></div>
-      <div class="word-item" id="wi-2"><span class="dot"></span><span class="word-text">PASCOA</span></div>
-      <div class="word-item" id="wi-3"><span class="dot"></span><span class="word-text">KORA</span></div>
-      <div class="word-item" id="wi-4"><span class="dot"></span><span class="word-text">MISSAO</span></div>
+      <div class="word-item" id="wi-1"><span class="dot"></span><span class="word-text">KORA</span></div>
+      <div class="word-item" id="wi-2"><span class="dot"></span><span class="word-text">MISSAO</span></div>
+      <div class="word-item" id="wi-3"><span class="dot"></span><span class="word-text">FUTURO</span></div>
+      <div class="word-item" id="wi-4"><span class="dot"></span><span class="word-text">GALAXIA</span></div>
+      <div class="word-item" id="wi-5"><span class="dot"></span><span class="word-text">PASCOA</span></div>
+      <div class="word-item" id="wi-6"><span class="dot"></span><span class="word-text">ESTRELA</span></div>
+      <div class="word-item" id="wi-7"><span class="dot"></span><span class="word-text">DECOLAR</span></div>
       <div class="egg-hint" id="egg-hint">🥚 <strong>Ovo escondido:</strong> a Kora escondeu um ovo em algum lugar da grade. Encontre-o clicando nas células!</div>
     </div>
   </div>
@@ -89,30 +97,39 @@
     <div class="cta-answer">KORA2025</div>
     <br>
     <a class="cta-btn" href="https://forms.office.com/Pages/ResponsePage.aspx?id=DEoZqR_OA0WsOr_OkXBtKR3iF7I_nO1MnAHR_WpvClRUM0RZME1LRUlSSVZSTDA2SEVKWElHN1JTMS4u" target="_blank">Quero participar do sorteio →</a>
-    <p style="margin-top:10px; font-size:12px; color:#888;">Inscrições até sexta-feira. Boa sorte! 🚀</p>
+    <p style="margin-top:10px; font-size:12px; color:#3A7BBF;">Inscrições até sexta-feira. Boa sorte! 🚀</p>
   </div>
 </div>
 <script>
-const ROWS=12,COLS=12;
+const ROWS=15, COLS=15;
 const WORDS=[
-  {word:"KOVALENT",dir:"H",row:0,col:0},
-  {word:"ORBITA",dir:"V",row:1,col:3},
-  {word:"PASCOA",dir:"H",row:4,col:5},
-  {word:"KORA",dir:"V",row:7,col:9},
-  {word:"MISSAO",dir:"H",row:9,col:1},
+  {word:"KOVALENT", dir:"H",  row:0,  col:0},
+  {word:"KORA",     dir:"V",  row:0,  col:10},
+  {word:"MISSAO",   dir:"D1", row:2,  col:1},
+  {word:"FUTURO",   dir:"D2", row:0,  col:14},
+  {word:"GALAXIA",  dir:"H",  row:6,  col:4},
+  {word:"PASCOA",   dir:"V",  row:5,  col:13},
+  {word:"ESTRELA",  dir:"D1", row:7,  col:1},
+  {word:"DECOLAR",  dir:"H",  row:13, col:0},
 ];
-const EGG={row:6,col:6};
+const EGG={row:9, col:9};
 const FILL="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
 let grid=Array.from({length:ROWS},()=>Array(COLS).fill(""));
-let foundWords=new Set(),eggFound=false,selecting=false,selStart=null,selCells=[];
+
+function setCell(r,c,ch){ if(r>=0&&r<ROWS&&c>=0&&c<COLS) grid[r][c]=ch; }
 
 WORDS.forEach(w=>{
   for(let i=0;i<w.word.length;i++){
-    const r=w.dir==="H"?w.row:w.row+i;
-    const c=w.dir==="H"?w.col+i:w.col;
-    grid[r][c]=w.word[i];
+    let r=w.row, c=w.col;
+    if(w.dir==="H")  { c+=i; }
+    else if(w.dir==="V")  { r+=i; }
+    else if(w.dir==="D1") { r+=i; c+=i; }
+    else if(w.dir==="D2") { r+=i; c-=i; }
+    setCell(r,c,w.word[i]);
   }
 });
+
 grid[EGG.row][EGG.col]=grid[EGG.row][EGG.col]||"O";
 for(let r=0;r<ROWS;r++) for(let c=0;c<COLS;c++) if(!grid[r][c]) grid[r][c]=FILL[Math.floor(Math.random()*FILL.length)];
 
@@ -121,8 +138,7 @@ const cells=[];
 for(let r=0;r<ROWS;r++){
   for(let c=0;c<COLS;c++){
     const cell=document.createElement("div");
-    const isEgg=r===EGG.row&&c===EGG.col;
-    cell.className="cell"+(isEgg?" egg egg-glow":"");
+    cell.className="cell";
     cell.textContent=grid[r][c];
     cell.dataset.r=r; cell.dataset.c=c;
     cells.push(cell); gridEl.appendChild(cell);
@@ -130,27 +146,33 @@ for(let r=0;r<ROWS;r++){
 }
 
 function cellAt(r,c){return cells[r*COLS+c];}
+
 function getLineCells(r1,c1,r2,c2){
+  const dr=Math.sign(r2-r1), dc=Math.sign(c2-c1);
+  const steps=Math.max(Math.abs(r2-r1),Math.abs(c2-c1));
+  if(dr!==0&&dc!==0&&Math.abs(r2-r1)!==Math.abs(c2-c1)) return [];
   const out=[];
-  if(r1===r2){for(let c=Math.min(c1,c2);c<=Math.max(c1,c2);c++)out.push({r:r1,c});}
-  else if(c1===c2){for(let r=Math.min(r1,r2);r<=Math.max(r1,r2);r++)out.push({r,c:c1});}
+  for(let i=0;i<=steps;i++) out.push({r:r1+dr*i, c:c1+dc*i});
   return out;
 }
+
+let foundWords=new Set(), eggFound=false, selecting=false, selStart=null, selCells=[];
+
 function clearSelection(){
   selCells.forEach(({r,c})=>{
     const cl=cellAt(r,c);
-    const f=[...cl.classList].find(x=>x.startsWith("found-"));
-    if(!f&&!(r===EGG.row&&c===EGG.col&&eggFound))cl.classList.remove("selected");
+    if(![...cl.classList].some(x=>x.startsWith("found-"))&&!(r===EGG.row&&c===EGG.col&&eggFound))
+      cl.classList.remove("selected");
   });
   selCells=[];
 }
+
 function checkWord(lineCells){
   const str=lineCells.map(({r,c})=>grid[r][c]).join("");
   const strRev=[...str].reverse().join("");
   for(let wi=0;wi<WORDS.length;wi++){
-    const w=WORDS[wi];
-    if(foundWords.has(wi))continue;
-    if(str===w.word||strRev===w.word){
+    if(foundWords.has(wi)) continue;
+    if(str===WORDS[wi].word||strRev===WORDS[wi].word){
       foundWords.add(wi);
       lineCells.forEach(({r,c})=>{
         const cl=cellAt(r,c);
@@ -163,6 +185,7 @@ function checkWord(lineCells){
   }
   return false;
 }
+
 function updateProgress(){
   const total=WORDS.length+1;
   const done=foundWords.size+(eggFound?1:0);
@@ -170,73 +193,70 @@ function updateProgress(){
   if(done<total){
     const left=WORDS.length-foundWords.size;
     const msgs=[];
-    if(left>0)msgs.push(left+" palavra"+(left>1?"s":"")+" restante"+(left>1?"s":""));
-    if(!eggFound)msgs.push("ovo escondido");
+    if(left>0) msgs.push(left+" palavra"+(left>1?"s":"")+" restante"+(left>1?"s":""));
+    if(!eggFound) msgs.push("ovo escondido");
     document.getElementById("status-msg").textContent="Falta"+(msgs.length>1?"m":"")+": "+msgs.join(" e ");
   }
-  if(foundWords.size===WORDS.length&&eggFound)showCTA();
+  if(foundWords.size===WORDS.length&&eggFound) showCTA();
 }
+
 function showCTA(){
   document.getElementById("status-msg").textContent="Missão completa!";
   document.getElementById("cta-panel").classList.add("show");
   document.getElementById("egg-hint").style.display="none";
 }
 
-gridEl.addEventListener("mousedown",e=>{
-  const t=e.target.closest(".cell");if(!t)return;
-  e.preventDefault();
-  const r=+t.dataset.r,c=+t.dataset.c;
+function handleStart(r,c){
   if(r===EGG.row&&c===EGG.col&&!eggFound){
     eggFound=true;
-    cellAt(r,c).classList.remove("egg-glow");
     cellAt(r,c).classList.add("egg-found");
     cellAt(r,c).textContent="🥚";
     document.getElementById("egg-hint").innerHTML="🥚 Ovo encontrado! Agora encontre todas as palavras.";
-    updateProgress();return;
+    updateProgress(); return;
   }
-  selecting=true;selStart={r,c};clearSelection();selCells=[{r,c}];cellAt(r,c).classList.add("selected");
+  selecting=true; selStart={r,c}; clearSelection(); selCells=[{r,c}]; cellAt(r,c).classList.add("selected");
+}
+
+function handleMove(r,c){
+  if(!selecting) return;
+  clearSelection();
+  const line=getLineCells(selStart.r,selStart.c,r,c);
+  selCells=line;
+  line.forEach(({r,c})=>{
+    const cl=cellAt(r,c);
+    if(![...cl.classList].some(x=>x.startsWith("found-"))&&!(r===EGG.row&&c===EGG.col&&eggFound))
+      cl.classList.add("selected");
+  });
+}
+
+function handleEnd(){
+  if(!selecting) return;
+  selecting=false;
+  if(!checkWord(selCells)) clearSelection();
+}
+
+gridEl.addEventListener("mousedown",e=>{
+  const t=e.target.closest(".cell"); if(!t) return; e.preventDefault();
+  handleStart(+t.dataset.r,+t.dataset.c);
 });
 gridEl.addEventListener("mousemove",e=>{
-  if(!selecting)return;
-  const t=e.target.closest(".cell");if(!t)return;
-  const r=+t.dataset.r,c=+t.dataset.c;
-  clearSelection();
-  const line=getLineCells(selStart.r,selStart.c,r,c);selCells=line;
-  line.forEach(({r,c})=>{
-    const cl=cellAt(r,c);
-    if(![...cl.classList].some(x=>x.startsWith("found-"))&&!(r===EGG.row&&c===EGG.col&&eggFound))
-      cl.classList.add("selected");
-  });
+  const t=e.target.closest(".cell"); if(!t) return;
+  handleMove(+t.dataset.r,+t.dataset.c);
 });
-document.addEventListener("mouseup",()=>{
-  if(!selecting)return;selecting=false;
-  if(!checkWord(selCells))clearSelection();
-});
+document.addEventListener("mouseup",handleEnd);
+
 gridEl.addEventListener("touchstart",e=>{
-  const t=e.touches[0];const el=document.elementFromPoint(t.clientX,t.clientY)?.closest(".cell");
-  if(!el)return;e.preventDefault();
-  const r=+el.dataset.r,c=+el.dataset.c;
-  if(r===EGG.row&&c===EGG.col&&!eggFound){
-    eggFound=true;cellAt(r,c).classList.remove("egg-glow");cellAt(r,c).classList.add("egg-found");cellAt(r,c).textContent="🥚";
-    document.getElementById("egg-hint").innerHTML="🥚 Ovo encontrado! Agora encontre todas as palavras.";
-    updateProgress();return;
-  }
-  selecting=true;selStart={r,c};clearSelection();selCells=[{r,c}];cellAt(r,c).classList.add("selected");
+  const t=e.touches[0]; const el=document.elementFromPoint(t.clientX,t.clientY)?.closest(".cell");
+  if(!el) return; e.preventDefault();
+  handleStart(+el.dataset.r,+el.dataset.c);
 },{passive:false});
 gridEl.addEventListener("touchmove",e=>{
-  if(!selecting)return;e.preventDefault();
-  const t=e.touches[0];const el=document.elementFromPoint(t.clientX,t.clientY)?.closest(".cell");
-  if(!el)return;
-  const r=+el.dataset.r,c=+el.dataset.c;
-  clearSelection();
-  const line=getLineCells(selStart.r,selStart.c,r,c);selCells=line;
-  line.forEach(({r,c})=>{
-    const cl=cellAt(r,c);
-    if(![...cl.classList].some(x=>x.startsWith("found-"))&&!(r===EGG.row&&c===EGG.col&&eggFound))
-      cl.classList.add("selected");
-  });
+  e.preventDefault();
+  const t=e.touches[0]; const el=document.elementFromPoint(t.clientX,t.clientY)?.closest(".cell");
+  if(!el) return;
+  handleMove(+el.dataset.r,+el.dataset.c);
 },{passive:false});
-document.addEventListener("touchend",()=>{if(!selecting)return;selecting=false;if(!checkWord(selCells))clearSelection();});
+document.addEventListener("touchend",handleEnd);
 
 updateProgress();
 </script>
